@@ -1,7 +1,7 @@
 
 const { UserType, QuizType, QuestionType, SubmissionType } = require('./types')
 const { User, Quiz, Question, Submission } = require('../models')
-const { GraphQLList, GraphQLID } = require('graphql')
+const { GraphQLList, GraphQLID, GraphQLString } = require('graphql')
 
 const users = {
     type: new GraphQLList(UserType),
@@ -22,4 +22,15 @@ const user = {
     }
 }
 
-module.exports = { users, user }
+const quizBySlug = {
+    type: QuizType,
+    description: "Query our quizzes based on their slug",
+    args: {
+        slug: { type: GraphQLString }
+    },
+    resolve(parent, args) {
+        return Quiz.findOne({ slug: args.slug })
+    }
+}
+
+module.exports = { users, user, quizBySlug }

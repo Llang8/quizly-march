@@ -1,0 +1,104 @@
+<%- include('../partials/header-dark.ejs') %>
+
+<main class="container">
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h1>Create a quiz</h1>
+                </div>
+            </div>
+            <form action="/quiz/create" method="POST">
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="quizTitle">Quiz Title</label>
+                            <input type="text" class="form-control" name="quizTitle">
+                        </div>
+                        <div class="form-group">
+                            <label for="quizDescription">Quiz Description</label>
+                            <input type="text" class="form-control" name="quizDescription">
+                        </div>
+                    </div>
+                </div>
+                <div id="quizQuestions"></div>
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <button type="button" onclick="addQuestion(event)" class="btn btn-success btn-block">Add Question +</button>
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<script>
+    const questionWrapper = document.querySelector('#quizQuestions')
+
+    let questions = [
+        {
+            title: '',
+            answer: ''
+        }
+    ]
+
+    const buildQuestions = (questions, wrapper) => {
+        wrapper.innerHTML = ''
+
+        for (let i = 0; i < questions.length; i++) {
+            wrapper.innerHTML += `
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h2 class="mb-4">Question ${i+1}</h2>
+                        <div class="form-group">
+                            <label for="questionTitle${i}">
+                                Question Title
+                            </label>
+                            <input type="text" name="questionTitle${i}" data-question="${i}" data-input="title" onchange="inputChange(event)" value="${questions[i].title}" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="questionAnswer${i}">
+                                Question Answer
+                            </label>
+                            <input type="text" name="questionAnswer${i}" data-question="${i}" data-input="answer" onchange="inputChange(event)" value="${questions[i].answer}" class="form-control" />
+                        </div>
+                        <button class="btn btn-danger" onclick="deleteQuestion(event)" data-question="${i}" type="button">Delete Question</button>
+                    </div>
+                </div>
+            `
+        }
+    }
+
+    const deleteQuestion = (e) => {
+        const questionIndex = e.target.dataset.question
+
+        questions.splice(questionIndex, 1)
+
+        buildQuestions(questions, questionWrapper)
+    } 
+
+    const addQuestion = (e) => {
+        questions.push({
+            title: '',
+            answer: ''
+        })
+
+        buildQuestions(questions, questionWrapper)
+    }
+
+    const inputChange = (e) => {
+        const questionIndex = e.target.dataset.question
+        const questionType = e.target.dataset.input
+
+        questions[questionIndex][questionType] = e.target.value
+    }
+
+    buildQuestions(questions, questionWrapper)
+</script>
+
+<%- include('../partials/footer.ejs') %>
