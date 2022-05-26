@@ -1,0 +1,6 @@
+{
+    "unprotectedRoutes": [
+        "/auth/login",
+        "/auth/register"
+    ]
+}

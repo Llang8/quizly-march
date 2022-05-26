@@ -3,9 +3,11 @@ const dotenv = require("dotenv")
 const { connectDB } = require("./src/db")
 const { graphqlHTTP } = require("express-graphql")
 const path = require("path")
+const cookieParser = require('cookie-parser')
 
 // Import our GraphQL Schema
 const schema = require("./src/graphql/schema")
+const authenticate = require("./src/middleware/authenticate")
 
 // Load in environment variables in process.env
 dotenv.config()
@@ -22,6 +24,11 @@ app.use("/graphql", graphqlHTTP({
     schema,
     graphiql: true
 }))
+
+app.use(express.urlencoded({ extended: true }))
+
+app.use(cookieParser())
+app.use(authenticate)
 
 /* Import our routes */
 require("./src/routes")(app)

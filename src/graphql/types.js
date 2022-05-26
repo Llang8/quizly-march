@@ -1,4 +1,4 @@
-const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLInt, GraphQLList, GraphQLFloat } = require('graphql')
+const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLInt, GraphQLList, GraphQLFloat, GraphQLInputObjectType } = require('graphql')
 
 // Import mongoose models
 const { Question, Quiz, User, Submission } = require('../models')
@@ -35,6 +35,16 @@ const QuestionType = new GraphQLObjectType({
         order: { type: GraphQLInt },
         quizId: { type: GraphQLString }
         /* quiz: { } */
+    })
+})
+
+const QuestionInputType = new GraphQLInputObjectType({
+    name: 'QuestionInput',
+    description: 'Question input type',
+    fields: () => ({
+        title: { type: GraphQLString },
+        correctAnswer: { type: GraphQLString },
+        order: { type: GraphQLInt }
     })
 })
 
@@ -102,5 +112,6 @@ module.exports = {
     UserType,
     QuizType,
     SubmissionType,
-    QuestionType
+    QuestionType,
+    QuestionInputType
 }
