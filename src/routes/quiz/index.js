@@ -6,5 +6,6 @@ MainQuizRouter.route("/create")
 
 MainQuizRouter.route("/:slug")
     .get(require("./quiz.view"))
+    .post(require("./submit"))
 
 module.exports = MainQuizRouter

@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
     const quizData = req.body
 
     const quizObject = {
-        userId: '628d23eea019c27e91a2c115',
+        userId: req.verifiedUser.user._id,
         title: quizData.quizTitle,
         description: quizData.quizDescription,
         questions: []

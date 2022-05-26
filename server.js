@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser')
 // Import our GraphQL Schema
 const schema = require("./src/graphql/schema")
 const authenticate = require("./src/middleware/authenticate")
+const userData = require("./src/middleware/userData")
 
 // Load in environment variables in process.env
 dotenv.config()
@@ -29,6 +30,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(cookieParser())
 app.use(authenticate)
+app.use(userData)
 
 /* Import our routes */
 require("./src/routes")(app)

@@ -8,13 +8,16 @@ module.exports = async (req, res) => {
     const query = `
         query quizBySlug($slug: String!) {
             quizBySlug(slug: $slug) {
-            title,
-            description,
-            questions {
+                id,
                 title,
-                correctAnswer,
-                order
-            }
+                slug,
+                description,
+                questions {
+                    id,
+                    title,
+                    correctAnswer,
+                    order
+                }
             }
         }
     `

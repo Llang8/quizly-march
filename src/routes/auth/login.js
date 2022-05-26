@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
         res.redirect('/')
 
     } catch(e) {
-        console.log(e)
+        console.log(e.response.data)
         res.redirect('/auth/login')
     }
 }

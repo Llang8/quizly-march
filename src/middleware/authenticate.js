@@ -6,10 +6,10 @@ const authenticate = async (req, res, next) => {
 
     try {
         const verified = jwt.verify(token, process.env.JWT_SECRET)
-        console.log(verified)
+        req.verifiedUser = verified
+        console.log(req.verifiedUser)
         next()
     } catch(e) {
-        console.log(e)
         if (unprotectedRoutes.includes(req.path)) {
             next()
         } else {

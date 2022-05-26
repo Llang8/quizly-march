@@ -8,4 +8,7 @@ MainAuthRouter.route("/register")
     .get(require("./register.view"))
     .post(require("./register"))
 
+MainAuthRouter.route("/logout")
+    .get(require("./logout"))
+
 module.exports = MainAuthRouter
